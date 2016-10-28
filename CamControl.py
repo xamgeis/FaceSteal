@@ -54,8 +54,8 @@ class CamControl:
 		if not self.ServoXcp.empty():
 			self._ServoXcp = self.ServoXcp.get()
 		self._ServoXdp = self._ServoXcp - distance
-		if self._ServoXdp < CamControl._ServoXul:
-			self._ServoXdp = CamControl._ServoXul
+		if self._ServoXdp < CamControl._ServoXll:
+			self._ServoXdp = CamControl._ServoXll
 		self.ServoXdp.put(self._ServoXdp)
 		self.ServoXs.put(speed)
 		return;
@@ -78,8 +78,8 @@ class CamControl:
 		if not self.ServoYcp.empty():
 			self._ServoYcp = self.ServoYcp.get()
 		self._ServoYdp = self._ServoYcp - distance
-		if self._ServoYdp < CamControl._ServoYul:
-			self._ServoYdp = CamControl._ServoYul
+		if self._ServoYdp < CamControl._ServoYll:
+			self._ServoYdp = CamControl._ServoYll
 		self.ServoYdp.put(self._ServoYdp)
 		self.ServoYs.put(speed)
 		return;
