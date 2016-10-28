@@ -65,8 +65,8 @@ class CamControl:
 		print "up"
 		if not self.ServoYcp.empty():
 			self._ServoYcp = self.ServoYcp.get()
-		self._ServoYdp = self._ServoYcp + distance
-		if self._ServoYdp > CamControl._ServoYul:
+		self._ServoYdp = self._ServoYcp - distance
+		if self._ServoYdp < CamControl._ServoYul:
 			self._ServoYdp = CamControl._ServoYul
 		self.ServoYdp.put(self._ServoYdp)
 		self.ServoYs.put(speed)
@@ -77,8 +77,8 @@ class CamControl:
 		print "down"
 		if not self.ServoYcp.empty():
 			self._ServoYcp = self.ServoYcp.get()
-		self._ServoYdp = self._ServoYcp - distance
-		if self._ServoYdp < CamControl._ServoYul:
+		self._ServoYdp = self._ServoYcp + distance
+		if self._ServoYdp > CamControl._ServoYul:
 			self._ServoYdp = CamControl._ServoYul
 		self.ServoYdp.put(self._ServoYdp)
 		self.ServoYs.put(speed)
@@ -237,8 +237,17 @@ if __name__ == "__main__":
 	cam = CamControl.CamControl()
 	cam.run()
 	cam.camRight(50,3)
-	#cam.camLeft(20,3)
 	cam.camUp(50,3)
-	#cam.camDown(20,3)
-
+	"""
+	i = 0
+	while True:
+		if i % 2 == 0:
+			cam.camRight(50,3)
+			cam.camUp(50,3)
+		else:
+			cam.camLeft(50,3)
+			cam.camDown(50,3)
+		time.sleep(3)
+		i += 1
+	"""
 	print "stop"
