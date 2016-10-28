@@ -4,6 +4,8 @@ import time
 class Servo:
 
     def __init__(self, servoNum, upperlimit, lowerlimit):
+        # ServoBlaster is whate we use to control the servo motor
+        self.servoBlaster = open('/dev/servoblaster', 'w')
         self.SERVO = servoNum   # servo number: 0,1,2,3...32  (defined in ServoBlaster for GPIO matching)
         self.ul=upperlimit
         self.ll=lowerlimit
@@ -41,6 +43,7 @@ class Servo:
                 self.dp = self.ll
             self.servoDp.put(self.dp)
             self.servoSpd.put(speed)
+        return;
     
     def moveClockwise(self, distance, speed):
         # move servo clockwise by desired position
@@ -52,6 +55,7 @@ class Servo:
             self.dp = self.ul
         self.servoDp.put(self.dp)
         self.servoSpd.put(speed)
+        return;
     
     def moveCounterClockwise(self, distance, speed):
         # move servo counterclockwise by desired position 
@@ -63,10 +67,12 @@ class Servo:
             self.dp = self.ll
         self.servoDp.put(self.dp)
         self.servoSpd.put(speed)
+        return;
     
     def run (self):
         #start Process on thread
         Process(target=self.Process_servo, args=()).start()
+        time.sleep(1)	#allow for the subproccess to start
 
 #   def setDegree ( self, degree ):
 #           if degree >= 0 or degree <= 180:
@@ -83,8 +89,6 @@ class Servo:
     
     def Process_servo(self):
         speed = .1
-        self.cp = 99
-        self.dp = 100
 
         # make servo position unequal, so we know where the servo 
         # really is 
@@ -129,7 +133,14 @@ class Servo:
                     trash = self.servoCp.get()
             elif self.cp == self.dp:
                 speedChange = 1 # slow the speed; no need to eat CPU just waiting
-    
+   
+"""
 if __name__ == "__main__":
+    import Servo
+
     print "running"
+    servoX = Servo.Servo(0, 250,75)
+    servoX.run()
+    servoX.move(50,3)
+"""
     

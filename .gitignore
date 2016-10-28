@@ -3,6 +3,9 @@ __pycache__/
 *.py[cod]
 *$py.class
 
+# Don't include the compiled bytecode
+*.pyc
+
 # C extensions
 *.so
 
